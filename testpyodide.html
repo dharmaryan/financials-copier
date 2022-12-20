@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <script src="https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js"></script>
+  </head>
+  <body>
+    Pyodide test page <br>
+    Open your browser console to see Pyodide output
+    <script type="text/javascript">
+      async function main(){
+        let pyodide = await loadPyodide();
+        console.log(pyodide.runPython(`
+
+def say_hello():
+    return "hello"        
+        
+def split_string(string):
+    rows = string.split('\\n')
+    split = [[]]*len(rows)
+
+    for i in range(0,len(rows)):
+        split[i] = rows[i].split(' ')
+    
+    return split
+
+def get_row_format(row):
+    # Normal case for values: [label, value_1, value_2, ..., value_no_cols]
+    
+    type = []
+    to_append = ['ppt', 'x', 'pct', 'm', 'mm']
+    special = ['-', 'n.a.', 'na', 'NA', 'nm', 'n.m.', 'NM', '–', '—']
+
+    for i in range(0, len(row)):
+        
+        # Test whether cell is numeric:
+
+        try:
+            num = row[i].replace(')','').replace('(','').replace(',','')
+            num.replace('ppt','').replace('%','')
+            float(num)
+            type.append('num')
+        except ValueError:
+            if row[i] in to_append:
+                type.append('append_prev')
+            elif row[i] in special:
+                type.append('special')
+            else:
+                # Check if the string is a label or a number in the label
+                if i == 0:
+                    # This is the label, so it can contain numbers
+                    type.append('label')
+                else:
+                    # This is not the label, so it should be treated as a string
+                    type.append('str')
+
+    return type
+
+def get_header_format(header):
+
+    currency = ['m', 'bn', '000', 'k', 'Mn', 'Bn', 'M', 'B']
+    date = ['H1', 'H2', 'Q1', 'Q2', 'Q3', 'Q4']
+    format = []
+
+    for i in range(0, len(header)):
+        
+        print(header[i])
+
+        if any(x in currency for x in header[i]):
+            format.append('curr')
+        elif any(x in date for x in header[i]) or ('20' in header[i]):
+            format.append('date')
+        else:
+            format.append('word')
+    
+    return format
+
+def format_header(header):
+
+    format = get_header_format(header)
+
+    if len(format) != len(header):
+        print('Error in code in format_header')
+        exit()
+
+    result = []
+    current = ''
+
+    for i in range(0, len(header)):
+
+        if format[i] == 'word' and current == '':
+            current += header[i]
+        elif format[i] == 'word' and current != '':
+            current += ' ' + header[i]
+        else:
+            if current == '':
+                print(f'{header[i]+format[i]}')
+                pass
+            else:
+                result.append(current)
+                current = ''
+
+            if format[i] == 'date':
+                result.append(header[i])
+            elif format[i] == 'curr':
+                try:
+                    result[-1] += ' ' + header[i]
+                except IndexError:
+                    pass
+            else:
+                print(f'{header[i]} has unaccounted for format')
+
+    if current != '':
+        result.append(current)
+
+    return result
+
+def format_row(row):
+    
+    format = get_row_format(row) 
+
+    if len(format) != len(row):
+        print('Error in code in format_row')
+        exit()
+
+    result = []
+    current = ''
+
+    for i in range(0, len(format)):
+        if format[i] == 'str':
+            current += ' ' + row[i]
+        elif format[i] == 'num':
+            result.append(row[i])
+        elif format[i] == 'append_prev':
+            result[-1] += row[i]
+        elif format[i] == 'label':
+            current += ' ' + row[i]
+        else:
+            print(f'Other non-supported type in function, {row[i]}')
+            result.append(row[i])
+
+    result.insert(0, current[1:])
+
+    return result
+
+def format_table(string):
+
+    split = split_string(string)
+
+    table = []
+
+    for i in range(0, len(split)):
+        if i == 0:
+            table.append(format_header(split[i]))
+        else:       
+            table.append(format_row(split[i]))
+
+    return table
+
+        `));
+        console.log(pyodide.runPython('say_hello()'));
+      }
+      main();
+    </script>
+  </body>
+</html>
