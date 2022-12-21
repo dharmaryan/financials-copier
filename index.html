@@ -2,56 +2,29 @@
 <html>
 <head>
 	<title>Excel Download</title>
+  <script src="https://unpkg.com/xlsx@0.16.1/dist/xlsx.full.min.js"></script>
+  <script src="copier.js"></script>
+  <script>
+    window.onload = function() {
+      console.log("Hello! Website has loaded.")
+    }
+  </script>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-	<input type="text" id="inputString">
-	<input type="number" id="numColumns">
-	<a href="#" onclick="downloadExcel()">Download Excel</a>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.1/xlsx.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js"></script>
-
-  <script>
-    window.languagePluginUrl = 'https://pyodide-cdn2.iodide.io/v0.15.0/full/';
-    pyodide.loadPackage('python').then(() => {
-      // Your Python code goes here
-      alert(say_hello('World'));
-    });
-  </script>
-
-<!-- <script>
-function createTable() {
-  var inputString = document.getElementById("inputString").value;
-  var numColumns = document.getElementById("numColumns").value;
-  var rows = inputString.split("\n");
-  var table = [];
-
-  for (var i = 0; i < rows.length; i++) {
-    var rowData = 
-
-    var rowData = rows[i].split(" ").map(function(item) {
-      return item.trim();
-    });
-    table.push(rowData);
-  }
-
-  return table;
-}
-
-function convertToExcel(table) {
-  var wb = XLSX.utils.book_new();
-  var ws = XLSX.utils.aoa_to_sheet(table);
-  XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-  return wb;
-}
-
-function downloadExcel() {
-  var table = createTable();
-  var wb = convertToExcel(table);
-  var blob = new Blob([XLSX.write(wb, {type:"array", bookType:"xlsx"})], {type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
-  saveAs(blob, "table.xlsx");
-}
-</script> -->
+  <form action="/form/submit" method="GET">
+    Provide table to be parsed:
+    <br/>
+    <textarea id = "input-string" rows="5" cols="60" name="text" placeholder="Enter table"></textarea>
+    <br/>
+    <br/>
+    <input id = "submit" type="submit" value="Parse table" onclick="parseTable()"/>
+    <input id = "submit" type="submit" value="Download Excel file" onclick="downloadExcel()"/>
+  </form>
+  <br/>
+  Output will be displayed below:
+  <br/>
+  <div id = "output-table" style="display: block"></div>
 </body>
 </html>
 

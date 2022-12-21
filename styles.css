@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
+
+body {
+    font-family: 'Space Mono';
+}
+
+.input-box {
+    word-wrap: break-word;
+    word-break: break-word;
+    width: 30%;
+    border: 1px solid;
+  }
+
+.output-table {
+    width: 30%;
+    font-size: 0.5em;
+}
