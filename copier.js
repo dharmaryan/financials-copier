@@ -1,50 +1,5 @@
-function runCode(expr) {
-    return pyodide.runPython(expr)
-}
-
-function testPython() {
-    
-    var text = document.getElementById("input-string").value
-    
-    console.log(runCode(`
-    import csv
-
-    def say_hello():
-        return "Hello! This website has initialised..."
-
-    def process_object(obj):
-        return obj
-
-
-    def parse_table(text):
-        lines = text.splitlines()
-        reader = csv.reader(lines, delimiter = " ")
-    
-        for row in reader:
-            print(row)
-    
-    say_hello()            
-
-    `))
-
-    console.log(runCode(`
-    
-    string = process_object(str("${text.replace('\n', ' [nr] ')}"))
-    
-    rows = string.split(' [nr] ')
-    table = [[]]*len(rows)
-
-    for i in range(0, len(rows)):
-        table[i] = rows[i].split(' ')
-    
-    table
-
-    `))
-
-}
-
 function createTable() {
-
+    // text is a string representation of a table
     var text = document.getElementById("input-string").value
     var rows = text.split('\n')
     var cells = rows.map(row => row.match(/\S+/g))
@@ -85,7 +40,7 @@ function financeValue(string) {
     }
 
     // Handle finance terms
-    if (string.includes('x')) {
+    if (string[-1] == 'x') {
         // string is a multiple
         // remove the 'x' and any other characters such as parentheses and spaces
         string = string.replace(/[^\d.-]/g, '');
@@ -102,50 +57,6 @@ function financeValue(string) {
     // Return value as a number
     return parseFloat(string);
   }  
-
-// Function to return the number value of a financially formatted string
-// Returns "string" if the input is a word or returns NaN when converted to a number
-function financeValueArchive(string) {
-    // Check if the string is a percentage
-    let percentageRegex = /^.*-? *\d+(.\d+)? *% *$/;
-    if (percentageRegex.test(string)) {
-        // Remove the percentage sign and any leading or trailing spaces
-        string = string.replace('%', '').trim();
-        // Return the number value divided by 100
-        return Number(string) / 100;
-    }
-    // Check if the string is a multiple
-    let multipleRegex = /^.*-? *\d+(.\d+)? *x *$/;
-    if (multipleRegex.test(string)) {
-        // Remove the "x" and any leading or trailing spaces
-        string = string.replace('x', '').trim();
-        // Return the number value
-        return Number(string);
-    }
-    // Check if the string is a currency value
-    let currencyRegex = /^ *-? *[^\d+-.,E]{1,3} *\d+(.\d+)? *[^\d+-.,E]? *$/;
-    if (currencyRegex.test(string)) {
-        // Return the number value of the currency string
-        return convertCurrencyToNumber(string);
-    }
-    // Check if the string is a number with parentheses
-    let parenthesesRegex = /^ *\((-? *\d+(\.\d+)?)\) *$/;
-    if (parenthesesRegex.test(string)) {
-        // Remove the parentheses and any leading or trailing spaces
-        string = string.replace(/[()]/g, '').trim();
-        // Return the negative of the number value
-        return -Number(string);
-    }
-    
-    // If the string is not a percentage, multiple, or currency value, try converting it to a number
-    let number = Number(string);
-    // If the conversion to a number returns NaN, return "string"
-    if (isNaN(number)) {
-        return "string";
-    }
-    // Otherwise, return the number value
-    return number;
-}
 
 // Helper function to convert a currency value string to a number
 function convertCurrencyToNumber(string) {
@@ -203,34 +114,137 @@ function convertCurrencyToNumber(string) {
     return Number(string);
 }
 
-function cleanTable() {
+function cleanTableNonActive() {
+    var cells = createTable()
+    var result = [];
+    var labels = [];
+  
+    for (let i = 0; i < cells.length; i++) {
+      var row = [];
+      var label = '';
+  
+      for (let j = 0; j < cells[i].length; j++) {
+        // Check if the cell is a number
+        if (!isNaN(financeValue(cells[i][j]))) {
+          // Add the cell to the row if it is a number
+          row.push(cells[i][j]);
+        } else {
+          // Concatenate the cell to the label if it is not a number
+          label += cells[i][j] + ' ';
+        }
+      }
+  
+      // Add the row and label to the result arrays if the row contains at least one number
+      if (row.length > 0) {
+        result.push(row);
+        labels.push(label.trim());
+      }
+    }
+  
+    console.log(result)
+    console.log(labels)
+    return [labels, ...result]
+  }
+
+  function cleanTable() {
+    var cells = createTable();
+    var result = [];
+    
+    // Check if the "has-header" radio button is checked
+    var hasHeader = document.getElementById("has-header").checked;
+    
+    for (let i = 0; i < cells.length; i++) {
+    var row = [];
+    
+    let label = "";
+    let numberFound = false;
+    for (let j = 0; j < cells[i].length; j++) {
+      // Check if the cell is a number
+      if (!isNaN(financeValue(cells[i][j]))) {
+        // Add the cell to the row if it is a number
+        row.push(cells[i][j]);
+        numberFound = true;
+      } else {
+        if (numberFound) {
+          // Add the sublabel to the row
+          row.push(cells[i][j]);
+        } else {
+          // Concatenate all of the words prior to the first number
+          // and insert them into the first column of this array.
+          label += cells[i][j] + ' ';
+        }
+      }
+    }
+    
+    // Add the label to the row if it was found
+    if (label.length > 0) {
+      row.unshift(label.trim());
+    }
+    
+    // Check if the row is a header row
+    if (hasHeader && i === 0) {
+      // Add the header row to the result array
+      result.push(row);
+    } else {
+      // Add the row to the result array if it contains at least one non-whitespace element
+      if (row.some((cell) => cell.trim().length > 0)) {
+        result.push(row);
+      }
+    }
+    }
+    
+    console.log(result);
+    return result;
+    }
+
+function cleanTableArchive() {
     var cells = createTable()
     var result = [];
 
     for (let i = 0; i < cells.length; i++) {
-        var row = '';
-        var count = 0 
-
-        for (let j = 0; j < cells[i].length; j++) {
-
-            console.log("Cell: "+cells[i][j]+" Number representation: "+financeValue(cells[i][j]))
-
-            if (isNaN(financeValue(cells[i][j]))) {
-                row += cells[i][j] + ' ';
-            } else {
-                result.push([row.trim(), ...cells[i].slice(j)]);
-                break
-            }
-
+        // Check if the row is empty
+        if (cells[i].length === 0) {
+            continue;
         }
 
-        row = row.trim();
+        // Initialize variables for the label and values
+        var label = '';
+        var values = [];
 
+        for (let j = 0; j < cells[i].length; j++) {
+            // Check if the cell is a label
+            if (isNaN(financeValue(cells[i][j]))) {
+                // If the label is already set, this is a sublabel
+                if (label) {
+                    label += ' ' + cells[i][j];
+                }
+                // Otherwise, this is the main label
+                else {
+                    label = cells[i][j];
+                }
+            }
+            // Otherwise, the cell is a value
+            else {
+                values.push(cells[i][j]);
+            }
+        }
+
+        // If there are no values, this is a row with only a label
+        if (values.length === 0) {
+            result.push([label]);
+        }
+        // If there is a label, this is a row with a label and values
+        else if (label) {
+            result.push([label, ...values]);
+        }
+        // Otherwise, this is a row with only values
+        else {
+            result.push(['', ...values]);
+        }
     }
 
     console.log(result)
     return result
-
 }
 
 function presentTable() {
@@ -254,7 +268,82 @@ function presentTable() {
 
 }
 
+function generateTableNonActive(data) {
+    // Flatten the data array and combine the labels and values into a single array
+    data = [].concat(...data);
+  
+    // Find the maximum width of each column
+    const columnWidths = data.reduce((widths, cell) => {
+      cell.forEach((cell, index) => {
+        widths[index] = Math.max(widths[index] || 0, cell.length);
+      });
+      return widths;
+    }, []);
+  
+    // Create a row for each inner array in the data
+    let tableString = '';
+    for (const row of data) {
+      // Add padding to the cells as needed to align the columns
+      const paddedCells = row.map((cell, index) => cell.padEnd(columnWidths[index]));
+      tableString += paddedCells.join(' | ') + '\n';
+    }
+  
+    // Return the generated table string
+    const inputField = document.getElementById("input-field")
+    inputField.value = tableString;
+  }
+
 function generateTable(data) {
+
+    // Find the maximum width of each column
+    const columnWidths = data.reduce((widths, row) => {
+        row.forEach((cell, index) => {
+        widths[index] = Math.max(widths[index] || 0, cell.length);
+        });
+        return widths;
+    }, []);
+
+    // Create a row for each inner array in the data
+    let tableString = '';
+    for (const row of data) {
+        // Add padding to the cells as needed to align the columns
+        const paddedCells = row.map((cell, index) => cell.padEnd(columnWidths[index]));
+        tableString += paddedCells.join(' | ') + '\n';
+    }
+
+    // Return the generated table string
+    const inputField = document.getElementById("input-field")
+    inputField.value = tableString;
+  }
+
+function generateTableArchive1(data) {
+    // Create the table element
+    const table = document.createElement('table');
+  
+    // Create a row for each inner array in the data
+    for (const row of data) {
+      const tr = document.createElement('tr');
+  
+      // Create a column for each item in the inner array
+      for (const col of row) {
+        const td = document.createElement('td');
+        td.textContent = col;
+        tr.appendChild(td);
+      }
+  
+      // Add the row to the table
+      table.appendChild(tr);
+    }
+  
+    // Generate the table as a string using the innerHTML property
+    const tableString = table.innerHTML;
+  
+    // Set the value of the input field to the generated table string
+    const inputField = document.getElementById('input-field');
+    inputField.value = tableString;
+  }
+
+function generateTableArchive(data) {
     // Create the table element
     const table = document.createElement('table');
     const outputField = document.getElementById('output-table');
@@ -284,15 +373,6 @@ function parseTable() {
     
 }
 
-function downloadExcelArchive() {
-    var table = createTable()
-    var ws = XLSX.utils.aoa_to_sheet(table)
-    var wb = XLSX.utils.book.new()
-
-    XLSX.utils.book_append_sheet(wb, ws);
-    XLSX.writeFile(wb, "table.xlsx")
-}
-
 function downloadExcel() {
     table = cleanTable()
 
@@ -314,3 +394,10 @@ function downloadExcel() {
     link.download = 'empty.xlsx';
     link.click();
   }
+
+function clearContents() {
+    var inputString = document.getElementById("input-string")
+    var outputField = document.getElementById("input-field")
+    inputString.value = ""
+    outputField.value = ""
+}

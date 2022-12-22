@@ -1,17 +1,127 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+* {
+    margin: 0;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.section-center {
+    display: absolute;
+    text-align: center;
+    vertical-align: center;
+    align-items: center;
+    min-height: 100vh;
+    margin-left: 30vh;
+    margin-right: 30vh;
+    color: black;
+    background: white;
+    padding: 1em;
+    padding-top: 3em;
+}
 
 body {
-    font-family: 'Space Mono';
+    font-family: 'Poppins';
+    font-size: 16px;
+    line-height: 1.5em;
+    margin: none;
 }
 
 .input-box {
     word-wrap: break-word;
     word-break: break-word;
-    width: 30%;
     border: 1px solid;
   }
 
 .output-table {
-    width: 30%;
-    font-size: 0.5em;
+    font-size: 1vh;
 }
+
+td {
+    overflow: visible;
+    white-space: nowrap;
+}
+
+.btn {
+    border-radius: 24px;
+    background: white;
+    box-shadow: 0px 2px 2px 2px rgba(205,205,205,1);
+    border: 0.5px solid; 
+    color: black;
+    padding: 2vh;
+}
+
+.btn:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+textarea {
+    width: 90%;
+    height: 30vh;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    font-size: 12px;
+    resize: none;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.column {
+    width: 50%;
+}
+
+.left-align {
+    text-align: left;
+    margin-left: 10%;
+}
+
+.right-align {
+    text-align: right;
+    margin-right: 5%;
+}
+
+.radio-btn {
+    margin-top: 6px;
+}
+
+/* Style the navbar /
+.navbar {
+position: fixed; / Make the navbar fixed to the top of the page /
+top: 0; / Position the navbar at the top of the page /
+width: 100%; / Full width /
+background-color: white; / White background color /
+opacity: 0.5; / Set the navbar to 50% opacity /
+box-shadow: 0px 2px 2px 2px rgba(205,205,205,1); / Add a box shadow */
+}
+
+/* Style the navbar links /
+.navbar a {
+float: left; / Float the links to the left /
+display: block; / Display the links as block elements /
+color: black; / Black text color /
+text-align: center; / Center the text /
+padding: 14px 16px; / Add some padding /
+text-decoration: none; / Remove the default text decoration /
+font-size: 17px; / Increase the font size */
+}
+
+/* Style the logo /
+.navbar .logo {
+float: left; / Float the logo to the left /
+font-size: 25px; / Increase the logo font size /
+text-decoration: none; / Remove the default text decoration */
+}
+
+/* Style the navbar buttons /
+.navbar .btn {
+float: right; / Float the buttons to the right /
+font-size: 17px; / Increase the button font size */
+
+
+
+

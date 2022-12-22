@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Excel Download</title>
+	<title>ConvertFS | Financial Statement Interpreter</title>
   <script src="https://unpkg.com/xlsx@0.16.1/dist/xlsx.full.min.js"></script>
   <script src="copier.js"></script>
   <script>
@@ -12,19 +12,38 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <nav>
+    <div class="left-nav">
+      <a href="home.html"><img src="logo.png" alt="Logo"></a>
+    </div>
+    <div class="right-nav">
+      <a href="home.html">Home</a>
+      <a href="index.html">Table Converter</a>
+      <a href="faq.html">FAQs</a>
+    </div>
+  </nav>
+  <div class="section-center">
   <form action="/form/submit" method="GET">
-    Provide table to be parsed:
+    Provide financial data (statements, line item schedules etc) to be parsed:
+    <br/><br/>
+    <textarea id = "input-string" rows="5" cols="60" name="text" oninput="parseTable()" placeholder="Enter table"></textarea>
     <br/>
-    <textarea id = "input-string" rows="5" cols="60" name="text" placeholder="Enter table"></textarea>
-    <br/>
-    <br/>
-    <input id = "submit" type="submit" value="Parse table" onclick="parseTable()"/>
-    <input id = "submit" type="submit" value="Download Excel file" onclick="downloadExcel()"/>
   </form>
   <br/>
   Output will be displayed below:
+  <br/><br/>
+  <textarea id="input-field" placeholder="Table will show here" readonly></textarea>
   <br/>
-  <div id = "output-table" style="display: block"></div>
+  <br/>
+  <div class="row"> 
+    <div class="column left left-align radio-btn">
+    </div>
+    <div class="column right right-align">
+    <input class = "btn" id = "clear" type="submit" value="Clear contents" onclick="clearContents()"/>
+      <input class = "btn" id = "download-excel" type="submit" value="Download Excel file" onclick="downloadExcel()"/>
+    </div>
+  </div>
+</div>
 </body>
 </html>
 
