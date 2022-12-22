@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ConvertFS | Home</title>
+  <script src="https://unpkg.com/xlsx@0.16.1/dist/xlsx.full.min.js"></script>
+  <script src="copier.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    window.onload = function() {
+      console.log("Hello! Website has loaded.")
+    }
+  </script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="left-nav">
+      <a href="home.html" class="logo"><b>ConvertFS</b></a>
+      <br/>
+    </div>
+    <div class="right-nav">
+      <a href="home.html" class="nav-btn">Home</a>
+      <a href="index.html" class="nav-btn">Table Converter</a>
+    </div>
+  </nav>
+  <section id="convertfs-intro">
+    <div class="extra-margin extra-margin">
+        <h1>ConvertFS</h1>
+        <h2>Free tool helping professionals copy and paste pesky website financials</h2>
+        <button onclick="location.href='index.html'">Get started</button>
+    </div>
+  </section>
+
+  <section id="how-it-works">
+    <div class="row">
+        <div class="column bg-grey">
+            
+        </div>
+        <div class="column">
+            <h2>Making PDF tables less annoying</h2>
+            <p>Look at the table to the left. </p>
+            <p>Have you ever tried to copy that table into Excel and had this pop up into your cell?</p>
+            <p><textarea readonly>
+                Year ending 30 June 2022 2021 Var (%) 2020    Operating activities    Normalised EBITDA 1 -4.1 >100% 0.7Working Capital -0.7 -1.4 0.5 1.3    Cash flow from operating activities 0.3 -5.5 >100% 2    Investing activities    Acquisition of subsidiary - -10.4 1 -Interest received 0.2 - 1 0.1Capital expenditure, including IP -16 -14.1 -0.13 -8.6    Cash flow used in Investing Activities -15.8 -24.5 0.36 -8.5    Financing activities    Cash flow from issue of equity - 1.7 -1 -Cash flow from borrowings, (net) 4.1 6.5 -0.37 2.8Principal lease payments -2.5 -1.4 -0.79 -1.7    Cash flow from Financing Activities 1.6 6.8 -0.76 1.1    Net Cash Flow -13.9 -23.2 0.4 -5.4Opening Cash Balance 82.5 136.3 n.a. 56.9Closing Cash Balance 69.4 114.2 n.a. 44.9
+</textarea></p>
+        
+        </div>
+    </div>
+  </section>
+  <section id="use-us-now">
+    <h2><b>Make PDF tables from financials editable, featuring: </b></h2>
+
+    <div class="columns">
+        <div class="col-hp">
+          <h3>Text-to-table parsing</h3><br/>
+          <p>Copy and paste financials directly into an input field and see the table automatically</p>
+        </div>
+        <div class="col-hp">
+          <h3>Download functionality in Excel</h3><br/>
+          <p>Like the table? Press the button to download it in Excel and go from there.</p>
+        </div>
+        <div class="col-hp">
+          <h3>Edit if the tables are wrong</h3><br/>
+          <p>Table didn't come out as expected? Edit the preview and download it as you like.</p>
+        </div>
+        <div class="col-hp">
+          <h3>Free and safe</h3><br/>
+          <p>This tool doesn't store any data. Everything is client side and no log-ins are required.</p>
+        </div>
+      </div>
+      <br/>
+      <div class="hp-border">
+        <h2><b>Start editing and make your workflow quicker.</b></h2>
+        <button onclick="location.href='index.html'" class="grd-btn">Get started</button>
+      </div>
+
+      <div class="footer">
+        Made by Ryan Dharma. ConvertFS is an open-source tool to help financial professionals speed up their workflow. 
+      </div>
+
+      <br/>
+    <!-- <br/>
+    <div class="video-bg">
+        <video src="demo-video.mp4" class="video-bg" muted loop autoplay></video>
+    </div> -->
+  </section>
+</body>
+</html>

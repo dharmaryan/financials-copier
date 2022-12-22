@@ -4,6 +4,7 @@
 	<title>ConvertFS | Financial Statement Interpreter</title>
   <script src="https://unpkg.com/xlsx@0.16.1/dist/xlsx.full.min.js"></script>
   <script src="copier.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script>
     window.onload = function() {
       console.log("Hello! Website has loaded.")
@@ -12,36 +13,56 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <nav>
+  <nav class="navbar">
     <div class="left-nav">
-      <a href="home.html"><img src="logo.png" alt="Logo"></a>
+      <a href="home.html" class="logo"><b>ConvertFS</b></a>
     </div>
     <div class="right-nav">
-      <a href="home.html">Home</a>
-      <a href="index.html">Table Converter</a>
-      <a href="faq.html">FAQs</a>
+      <a href="home.html" class="nav-btn">Home</a>
+      <a href="index.html" class="nav-btn">Table Converter</a>
     </div>
   </nav>
   <div class="section-center">
+  <div class="parser-intro extra-margin">
+    <b>Extract financial statements from website</b>
+  </div> 
+  <br/>
   <form action="/form/submit" method="GET">
-    Provide financial data (statements, line item schedules etc) to be parsed:
-    <br/><br/>
+    <div class="l2-head">Input table below:</div> <br/>
     <textarea id = "input-string" rows="5" cols="60" name="text" oninput="parseTable()" placeholder="Enter table"></textarea>
     <br/>
   </form>
   <br/>
-  Output will be displayed below:
-  <br/><br/>
+  <div class="l2-head">Output table preview displayed below:</div> 
+  <br/>
   <textarea id="input-field" placeholder="Table will show here" readonly></textarea>
   <br/>
   <br/>
   <div class="row"> 
     <div class="column left left-align radio-btn">
+      <input class = "btn" id = "clear" type="submit" value="Clear contents" onclick="clearContents()"/>
+      <input class = "btn" id = "download-excel" type="submit" value="Download Excel file" onclick="downloadExcel()"/>  
     </div>
     <div class="column right right-align">
-    <input class = "btn" id = "clear" type="submit" value="Clear contents" onclick="clearContents()"/>
-      <input class = "btn" id = "download-excel" type="submit" value="Download Excel file" onclick="downloadExcel()"/>
     </div>
+  </div>
+  <div class="section-divider"> &nbsp; </div>
+  <div class="parser-intro">
+    <b>Troubleshooting tips</b>
+  </div>
+  <br/>
+  This website is in its early days. Some tables might not parse correctly, so try doing the following to fix up the table formatting:
+  <br/><br/>
+  <ul>
+    <li>Check whether each row is in the format <b>label value value value</b>, and that the label only occupies one line. Some labels might be copied and pasted across multiple lines and 
+      right now the program isn't built to handle this.</li><br/>
+    <li>Remove headers. I am working on additional functionality to handle the headers, but right now the entire row will copy and paste as the first label in a row.</li><br/>
+    <li>Provide feedback for future updates <b>here</b>.</li>
+  </ul>
+  <br/>
+  <br/>
+  <div class="footer">
+    Made by Ryan Dharma. ConvertFS is an open-source tool to help financial professionals speed up their workflow. 
   </div>
 </div>
 </body>

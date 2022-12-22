@@ -151,7 +151,6 @@ function cleanTableNonActive() {
     var result = [];
     
     // Check if the "has-header" radio button is checked
-    var hasHeader = document.getElementById("has-header").checked;
     
     for (let i = 0; i < cells.length; i++) {
     var row = [];
@@ -182,7 +181,7 @@ function cleanTableNonActive() {
     }
     
     // Check if the row is a header row
-    if (hasHeader && i === 0) {
+    if (i === 0) {
       // Add the header row to the result array
       result.push(row);
     } else {
