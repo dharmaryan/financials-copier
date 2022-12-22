@@ -58,94 +58,6 @@ function financeValue(string) {
     return parseFloat(string);
   }  
 
-// Helper function to convert a currency value string to a number
-function convertCurrencyToNumber(string) {
-    // Check if the string is a number abbreviation
-    let abbreviationRegex = /[^\d+-.,E]+/;
-    let abbreviation = string.match(abbreviationRegex);
-    if (abbreviation) {
-        // Remove the abbreviation and any leading or trailing spaces
-        string = string.replace(abbreviation, '').trim();
-        // Convert the abbreviation to a multiplier
-        let multiplier = 1;
-        switch (abbreviation[0]) {
-            case 'k':
-            case 'K':
-            case 'thou':
-            case 'Thou':
-            case 'THOU':
-                multiplier = 1000;
-                break;
-            case 'm':
-            case 'M':
-            case 'mil':
-            case 'Mil':
-            case 'MIL':
-            case 'mn':
-            case 'Mn':
-            case 'MN':
-                multiplier = 1000000;
-                break;
-            case 'b':
-            case 'B':
-            case 'bil':
-            case 'Bil':
-            case 'BIL':
-            case 'bn':
-            case 'Bn':
-            case 'BN':
-                multiplier = 1000000000;
-                break;
-            case 't':
-            case 'T':
-            case 'tril':
-            case 'Tril':
-            case 'TRIL':
-            case 'tn':
-            case 'Tn':
-            case 'TN':
-                multiplier = 1000000000000;
-                break;
-        }
-        // Return the number value multiplied by the abbreviation multiplier
-        return Number(string) * multiplier;
-    }
-    // Return the string as a number
-    return Number(string);
-}
-
-function cleanTableNonActive() {
-    var cells = createTable()
-    var result = [];
-    var labels = [];
-  
-    for (let i = 0; i < cells.length; i++) {
-      var row = [];
-      var label = '';
-  
-      for (let j = 0; j < cells[i].length; j++) {
-        // Check if the cell is a number
-        if (!isNaN(financeValue(cells[i][j]))) {
-          // Add the cell to the row if it is a number
-          row.push(cells[i][j]);
-        } else {
-          // Concatenate the cell to the label if it is not a number
-          label += cells[i][j] + ' ';
-        }
-      }
-  
-      // Add the row and label to the result arrays if the row contains at least one number
-      if (row.length > 0) {
-        result.push(row);
-        labels.push(label.trim());
-      }
-    }
-  
-    console.log(result)
-    console.log(labels)
-    return [labels, ...result]
-  }
-
   function cleanTable() {
     var cells = createTable();
     var result = [];
@@ -196,56 +108,6 @@ function cleanTableNonActive() {
     return result;
     }
 
-function cleanTableArchive() {
-    var cells = createTable()
-    var result = [];
-
-    for (let i = 0; i < cells.length; i++) {
-        // Check if the row is empty
-        if (cells[i].length === 0) {
-            continue;
-        }
-
-        // Initialize variables for the label and values
-        var label = '';
-        var values = [];
-
-        for (let j = 0; j < cells[i].length; j++) {
-            // Check if the cell is a label
-            if (isNaN(financeValue(cells[i][j]))) {
-                // If the label is already set, this is a sublabel
-                if (label) {
-                    label += ' ' + cells[i][j];
-                }
-                // Otherwise, this is the main label
-                else {
-                    label = cells[i][j];
-                }
-            }
-            // Otherwise, the cell is a value
-            else {
-                values.push(cells[i][j]);
-            }
-        }
-
-        // If there are no values, this is a row with only a label
-        if (values.length === 0) {
-            result.push([label]);
-        }
-        // If there is a label, this is a row with a label and values
-        else if (label) {
-            result.push([label, ...values]);
-        }
-        // Otherwise, this is a row with only values
-        else {
-            result.push(['', ...values]);
-        }
-    }
-
-    console.log(result)
-    return result
-}
-
 function presentTable() {
     table = cleanTable()
     newTable = ""
@@ -267,30 +129,6 @@ function presentTable() {
 
 }
 
-function generateTableNonActive(data) {
-    // Flatten the data array and combine the labels and values into a single array
-    data = [].concat(...data);
-  
-    // Find the maximum width of each column
-    const columnWidths = data.reduce((widths, cell) => {
-      cell.forEach((cell, index) => {
-        widths[index] = Math.max(widths[index] || 0, cell.length);
-      });
-      return widths;
-    }, []);
-  
-    // Create a row for each inner array in the data
-    let tableString = '';
-    for (const row of data) {
-      // Add padding to the cells as needed to align the columns
-      const paddedCells = row.map((cell, index) => cell.padEnd(columnWidths[index]));
-      tableString += paddedCells.join(' | ') + '\n';
-    }
-  
-    // Return the generated table string
-    const inputField = document.getElementById("input-field")
-    inputField.value = tableString;
-  }
 
 function generateTable(data) {
 
@@ -372,8 +210,23 @@ function parseTable() {
     
 }
 
+function editTable() {
+    var parsedTable = document.getElementById("input-field").value
+    var rows = parsedTable.split('\n')
+    var cells = []
+
+    for (let i = 0; i < rows.length; i++) {
+        // Use map to apply replace to each cell value
+        cells.push(rows[i].split(" | ").map(cell => cell.replace(/^\s+|\s+$/g, '')))
+    }
+    
+    console.log("editTable running...")
+    console.log(cells)
+    return cells
+}
+
 function downloadExcel() {
-    table = cleanTable()
+    table = editTable()
 
     // Create an empty workbook
     const wb = XLSX.utils.book_new();
@@ -390,7 +243,7 @@ function downloadExcel() {
     // Create a download link and trigger the download
     const link = document.createElement('a');
     link.href = window.URL.createObjectURL(data);
-    link.download = 'empty.xlsx';
+    link.download = 'convertfs-table.xlsx';
     link.click();
   }
 
