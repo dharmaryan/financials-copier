@@ -1,6 +1,205 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-* {
+@import url('https://fonts.googleapis.com/css2?family=Archivo&family=Nunito+Sans:wght@700&display=swap');* {
     margin: 0;
+}
+
+.grd-btn {
+    font-size: 24px;
+    border: none;
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    color: white;
+    cursor: pointer;
+    border-radius: 24px;
+    background-image: linear-gradient(137deg,#f191fa,#83e3f0);
+}
+.grd-btn:hover {
+    opacity: 0.8;
+}
+
+.hp-border {
+    border: 0.5px solid;
+    margin: 3em;
+    padding-top: 3em;
+    padding-left: 3em;
+    padding-right: 3em;
+    padding-bottom: 2em;
+    border-radius: 24px;
+    margin-bottom: 2em;
+    vertical-align: center;
+    text-align: center;
+}
+
+.padding-hp {
+    margin-left: 3em;
+    margin-right: 3em;
+    margin-top: -4em;
+}
+
+.txt-small {
+    height: 1em;
+}
+
+.bg-grey {
+    background-image: url('hp-how-it-works.png');
+    background-size: 95%;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-left: -2em;
+    margin-top: -2em;
+}
+
+#how-it-works {
+    padding: 3em;
+  }
+  
+  #how-it-works h2 {
+    font-size: 32px;
+    margin-bottom: 1em;
+  }
+  
+  #how-it-works p {
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 1em;
+  }
+
+#convertfs-intro {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    height: 60vh;
+    background-image: linear-gradient(137deg,#f191fa,#83e3f0);
+    color: white;
+    text-shadow: 2px 2px 2px rgba(200,200,200,0.5);
+    padding: 3em;
+  }
+  
+  #convertfs-intro h1 {
+    font-size: 64px;
+    margin-bottom: 0.5em;
+  }
+
+  #convertfs-intro h2 {
+    margin-bottom: 1em;
+  }
+  
+  #convertfs-intro button {
+    font-size: 24px;
+    padding: 0.5em 1em;
+    border: none;
+    font-family: 'Archivo';
+    font-weight: bold;
+    border-radius: 24px;
+    background-color: white;
+    color: rgb(75,75,75);
+    cursor: pointer;
+  }
+
+  .columns {
+    display: flex; /* Create a flex container for the columns */
+  }
+  
+  .col-hp {
+    flex: 1;
+    padding: 1em;
+    padding-bottom: -1em;
+    align-items: center;
+  }
+
+  .col-hp:nth-child(1) {
+    background: linear-gradient(45deg, lightblue, lightcyan); /* Set the background color of the first col-hp */
+    }
+    
+    .col-hp:nth-child(2) {
+    background: linear-gradient(45deg, lightgreen, lightseagreen); /* Set the background color of the second col-hp */
+    }
+    
+    .col-hp:nth-child(3) {
+    background: linear-gradient(45deg, lightyellow, lightgoldenrodyellow); /* Set the background color of the third col-hp */
+    }
+    
+    .col-hp:nth-child(4) {
+    background: linear-gradient(45deg, aquamarine, lightyellow); /* Set the background color of the fourth col-hp */
+    }
+
+  .container {
+    display: flex;
+    justify-content: space-between; /* Space the boxes apart */
+  }
+  
+  .box {
+    width: 200px;
+    height: 200px;
+    border: 0.5px solid black;
+    border-radius: 24px; /* Round the corners */
+    margin: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+  
+  #use-us-now {
+    padding: 0em;
+    text-align: center;
+  }
+
+
+.video-bg video {
+    object-fit: cover;
+    width: 60%;
+    height: auto;
+}
+
+.video-bg {
+    margin-bottom: 3em;
+}
+  
+  #use-us-now h2 {
+    font-size: 32px;
+    margin-bottom: 1em;
+  }
+  
+  #use-us-now p {
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 1em;
+  }
+  
+  #use-us-now ol {
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 1em;
+  }
+  
+  #use-us-now li {
+    margin-bottom: 0.5em;
+  }
+
+.extra-margin {
+    margin-top: 1em;
+}
+
+.section-divider {
+    border-bottom: 0.5px solid rgb(200,200,200);
+    padding-top: 1em;
+}
+
+.parser-intro {
+    width: 100%;
+    font-size: 32px;
+    font-weight: bold;
+    text-align: left;
+    padding-top: 1em;
+    color: rgb(75,75,75);
+    position: relative;
+  }
+  
+.footer {
+    font-size: 12px;
 }
 
 .text-center {
@@ -9,20 +208,23 @@
 
 .section-center {
     display: absolute;
-    text-align: center;
+    text-align: left;
     vertical-align: center;
     align-items: center;
     min-height: 100vh;
-    margin-left: 30vh;
-    margin-right: 30vh;
+    margin-left: 20vh;
+    margin-right: 20vh;
     color: black;
     background: white;
     padding: 1em;
-    padding-top: 3em;
+}
+
+.l2-head {
+    font-size: 20px;
 }
 
 body {
-    font-family: 'Poppins';
+    font-family: 'Archivo';
     font-size: 16px;
     line-height: 1.5em;
     margin: none;
@@ -58,7 +260,7 @@ td {
 }
 
 textarea {
-    width: 90%;
+    width: 100%;
     height: 30vh;
     overflow-x: scroll;
     overflow-y: scroll;
@@ -77,7 +279,6 @@ textarea {
 
 .left-align {
     text-align: left;
-    margin-left: 10%;
 }
 
 .right-align {
@@ -89,39 +290,93 @@ textarea {
     margin-top: 6px;
 }
 
-/* Style the navbar /
+
+/* Style the navbar */
 .navbar {
-position: fixed; / Make the navbar fixed to the top of the page /
-top: 0; / Position the navbar at the top of the page /
-width: 100%; / Full width /
-background-color: white; / White background color /
-opacity: 0.5; / Set the navbar to 50% opacity /
-box-shadow: 0px 2px 2px 2px rgba(205,205,205,1); / Add a box shadow */
-}
-
-/* Style the navbar links /
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: white;
+    z-index: 1;
+    box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.2);
+    opacity: 0.8;
+    }
+    
+/* Style the navbar links */
 .navbar a {
-float: left; / Float the links to the left /
-display: block; / Display the links as block elements /
-color: black; / Black text color /
-text-align: center; / Center the text /
-padding: 14px 16px; / Add some padding /
-text-decoration: none; / Remove the default text decoration /
-font-size: 17px; / Increase the font size */
+    float: left;
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 8px 10px;
+    text-decoration: none;
+    font-size: 14px;
+    opacity: 1;
 }
 
-/* Style the logo /
+/* Style the navbar logo */
 .navbar .logo {
-float: left; / Float the logo to the left /
-font-size: 25px; / Increase the logo font size /
-text-decoration: none; / Remove the default text decoration */
+    float: left;
+    display: block;
+    color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(137deg,aquamarine, purple);    
+    opacity: 1;
+    text-align: center;
+    padding: 8px 10px;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
 }
 
-/* Style the navbar buttons /
 .navbar .btn {
-float: right; / Float the buttons to the right /
-font-size: 17px; / Increase the button font size */
+    float: right; 
+    font-size: 14px; 
+}
 
+.navbar .btn:hover {
+    color: grey;
+}
+        
+/* Style the active navbar link */
+.navbar .active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.left-nav {
+float: left;
+display: flex; 
+align-items: center;
+}
+
+.left-nav img {
+height: 50px; 
+}
+
+.right-nav {
+float: right; 
+display: flex;
+align-items: center; 
+margin-right: 6px;
+}
+
+.right-nav a {
+font-size: 14px; 
+margin-left: 10px; 
+text-decoration: none; 
+color: black;
+}
+
+.right-nav a.active {
+color: white; 
+}
+
+.right-nav a:hover {
+    opacity: 0.5;
+    border-radius: 10px; 
+}
 
 
 
